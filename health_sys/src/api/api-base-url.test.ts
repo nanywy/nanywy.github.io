@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fetchNearbyShops } from "./shops";
 import { sendAgentTextChat } from "./agent";
+import { resolveApiBaseUrl } from "./url";
 
 describe("API base URL", () => {
   beforeEach(() => {
@@ -46,5 +47,9 @@ describe("API base URL", () => {
         method: "POST"
       })
     );
+  });
+
+  it("defaults production builds to the Vercel backend", () => {
+    expect(resolveApiBaseUrl({ PROD: true, VITE_API_BASE_URL: "" })).toBe("https://huoshanbei-api.vercel.app");
   });
 });
