@@ -24,9 +24,13 @@ app.post('/api/chat-with-image', useImageUpload, createAsyncHandler(handleImageC
 app.get('/api/nearby-shops', createAsyncHandler(handleNearbyShops));
 app.use(handleExpressError);
 
-app.listen(process.env.PORT || DEFAULT_PORT, () => {
-  console.log(`BFF Server Running on http://localhost:${process.env.PORT || DEFAULT_PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(process.env.PORT || DEFAULT_PORT, () => {
+    console.log(`BFF Server Running on http://localhost:${process.env.PORT || DEFAULT_PORT}`);
+  });
+}
+
+export default app;
 
 function readAllowedOrigins(env) {
   return (env.CORS_ORIGINS || 'https://nanywy.github.io,http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,http://127.0.0.1:5174')
